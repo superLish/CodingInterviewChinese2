@@ -18,8 +18,7 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 #include<cstring>
 #include<cstdio>
 
-class CMyString
-{
+class CMyString {
 public:
     CMyString(char* pData = nullptr);
     CMyString(const CMyString& str);
@@ -33,35 +32,28 @@ private:
     char* m_pData;
 };
 
-CMyString::CMyString(char *pData)
-{
-    if(pData == nullptr)
-    {
+CMyString::CMyString(char *pData) {
+    if(pData == nullptr) {
         m_pData = new char[1];
         m_pData[0] = '\0';
-    }
-    else
-    {
+    } else {
         int length = strlen(pData);
         m_pData = new char[length + 1];
         strcpy(m_pData, pData);
     }
 }
 
-CMyString::CMyString(const CMyString &str)
-{
+CMyString::CMyString(const CMyString &str) {
     int length = strlen(str.m_pData);
     m_pData = new char[length + 1];
     strcpy(m_pData, str.m_pData);
 }
 
-CMyString::~CMyString()
-{
+CMyString::~CMyString() {
     delete[] m_pData;
 }
 
-CMyString& CMyString::operator = (const CMyString& str)
-{
+CMyString& CMyString::operator = (const CMyString& str) {
     if(this == &str)
         return *this;
 
@@ -75,13 +67,11 @@ CMyString& CMyString::operator = (const CMyString& str)
 }
 
 // ====================测试代码====================
-void CMyString::Print()
-{
+void CMyString::Print() {
     printf("%s", m_pData);
 }
 
-void Test1()
-{
+void Test1() {
     printf("Test1 begins:\n");
 
     char* text = "Hello world";
@@ -98,8 +88,7 @@ void Test1()
 }
 
 // 赋值给自己
-void Test2()
-{
+void Test2() {
     printf("Test2 begins:\n");
 
     char* text = "Hello world";
@@ -138,12 +127,10 @@ void Test3()
     printf(".\n");
 }
 
-int main(int argc, char* argv[])
-{
+int main() {
     Test1();
     Test2();
     Test3();
 
     return 0;
 }
-
