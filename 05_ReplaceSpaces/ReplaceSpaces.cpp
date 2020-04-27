@@ -19,9 +19,10 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 #include <cstdio>
 #include <cstring>
 
-/*length 为字符数组str的总容量，大于或等于字符串str的实际长度*/
-void ReplaceBlank(char str[], int length)
-{
+/*length 为字符数组str的总容量，大于或等于字符串str的实际长度
+主要思想就是，先计算出有多少空格，计算出新的字符串长度，然后倒着遍历旧的字符串，遇到空格就填充字符串%20，不是空格就拷贝赋值
+*/
+void ReplaceBlank(char str[], int length) {
     if(str == nullptr && length <= 0)
         return;
 
@@ -29,12 +30,10 @@ void ReplaceBlank(char str[], int length)
     int originalLength = 0;
     int numberOfBlank = 0;
     int i = 0;
-    while(str[i] != '\0')
-    {
-        ++ originalLength;
-
+    while(str[i] != '\0') {
+        ++originalLength;
         if(str[i] == ' ')
-            ++ numberOfBlank;
+            ++numberOfBlank;
 
         ++ i;
     }
@@ -46,16 +45,12 @@ void ReplaceBlank(char str[], int length)
 
     int indexOfOriginal = originalLength;
     int indexOfNew = newLength;
-    while(indexOfOriginal >= 0 && indexOfNew > indexOfOriginal)
-    {
-        if(str[indexOfOriginal] == ' ')
-        {
+    while(indexOfOriginal >= 0 && indexOfNew > indexOfOriginal) {
+        if(str[indexOfOriginal] == ' ') {
             str[indexOfNew --] = '0';
             str[indexOfNew --] = '2';
             str[indexOfNew --] = '%';
-        }
-        else
-        {
+        } else{
             str[indexOfNew --] = str[indexOfOriginal];
         }
 
@@ -64,8 +59,7 @@ void ReplaceBlank(char str[], int length)
 }
 
 // ====================测试代码====================
-void Test(char* testName, char str[], int length, char expected[])
-{
+void Test(char* testName, char str[], int length, char expected[]) {
     if(testName != nullptr)
         printf("%s begins: ", testName);
 
@@ -82,8 +76,7 @@ void Test(char* testName, char str[], int length, char expected[])
 }
 
 // 空格在句子中间
-void Test1()
-{
+void Test1() {
     const int length = 100;
 
     char str[length] = "hello world";
@@ -91,8 +84,7 @@ void Test1()
 }
 
 // 空格在句子开头
-void Test2()
-{
+void Test2() {
     const int length = 100;
 
     char str[length] = " helloworld";
@@ -100,8 +92,7 @@ void Test2()
 }
 
 // 空格在句子末尾
-void Test3()
-{
+void Test3() {
     const int length = 100;
 
     char str[length] = "helloworld ";
@@ -109,8 +100,7 @@ void Test3()
 }
 
 // 连续有两个空格
-void Test4()
-{
+void Test4() {
     const int length = 100;
 
     char str[length] = "hello  world";
@@ -118,14 +108,12 @@ void Test4()
 }
 
 // 传入nullptr
-void Test5()
-{
+void Test5() {
     Test("Test5", nullptr, 0, nullptr);
 }
 
 // 传入内容为空的字符串
-void Test6()
-{
+void Test6() {
     const int length = 100;
 
     char str[length] = "";
@@ -133,8 +121,7 @@ void Test6()
 }
 
 //传入内容为一个空格的字符串
-void Test7()
-{
+void Test7() {
     const int length = 100;
 
     char str[length] = " ";
@@ -142,8 +129,7 @@ void Test7()
 }
 
 // 传入的字符串没有空格
-void Test8()
-{
+void Test8() {
     const int length = 100;
 
     char str[length] = "helloworld";
@@ -151,16 +137,14 @@ void Test8()
 }
 
 // 传入的字符串全是空格
-void Test9()
-{
+void Test9() {
     const int length = 100;
 
     char str[length] = "   ";
     Test("Test9", str, length, "%20%20%20");
 }
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     Test1();
     Test2();
     Test3();
@@ -173,4 +157,3 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-
