@@ -18,7 +18,43 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 那么对应的输出是重复的数字2或者3。
 
 #include <cstdio>
+#include<iostream>
+#include<cassert>
+using namespace std;
 
+
+// 最笨的方法： 遍历 时间复杂度O(n^2), 不推荐
+int dupltcate_detect(const int* a, const int len) {
+    assert(a != nullptr && len > 1);
+    for (int i = 0; i < len; ++i) {
+        for (int j = i + 1; j < len; ++j) {
+            if (a[i] == a[j]) 
+                return a[i];
+        }
+    }
+
+    return -1;
+}
+
+// 有没有更好一点的算法呢？题目中有提到在一个长度为n的数组中，所有的数字都在[0,u-1]范围内，应该应用这一限制条件改进算法。
+// 思路有点类似桶排序，或者bloom过滤器， 时间复杂度O(n)
+int duplicate_find(const int* a, const int len) {
+    assert(a != nullptr && len > 1);
+    // todo: 输入限制合法性检查，所有数字都在[0,n-1]范围内
+    bool flag[len] = {false};
+    for (int i = 0; i < len; ++i) {
+        if (flag[a[i]] == false) {
+            flag[a[i]] = true;
+        } else {
+            return a[i];
+        }
+    }
+
+    return -1;
+}
+
+
+// 这个代码虽然比上面的代码稍微复杂一点，但是有一个好处就是空间复杂度比上面的小，上面的空间复杂度O(n)，这个是O(1)，O(1)的代价是破坏了原有数据，时间复杂度相同
 // 参数:
 //        numbers:     一个整数数组
 //        length:      数组的长度
@@ -26,21 +62,18 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 返回值:             
 //        true  - 输入有效，并且数组中存在重复的数字
 //        false - 输入无效，或者数组中没有重复的数字
-bool duplicate(int numbers[], int length, int* duplication)
-{
+bool duplicate(int numbers[], int length, int* duplication) {
     if(numbers == nullptr || length <= 0)
         return false;
 
-    for(int i = 0; i < length; ++i)
-    {
+    for(int i = 0; i < length; ++i) {
         if(numbers[i] < 0 || numbers[i] > length - 1)
             return false;
     }
 
-    for(int i = 0; i < length; ++i)
-    {
-        while(numbers[i] != i)
-        {
+    // 主要思路是: 把数组中的元素排成数组a索引i=a[i]的形式
+    for(int i = 0; i < length; ++i) {
+        while(numbers[i] != i) {
             if(numbers[i] == numbers[numbers[i]])
             {
                 *duplication = numbers[i];
@@ -140,12 +173,28 @@ void test6()
     test("Test6", numbers, 0, duplications, sizeof(duplications) / sizeof(int), false);
 }
 
-void main()
-{
+void test7() {
+    int numbers[] = { 2, 1, 3, 1, 4 };
+    int v = dupltcate_detect(numbers, sizeof(numbers)/sizeof(int));
+    cout << "test7 : " << v << endl;
+}
+
+void test8() {
+    int numbers[] = { 2, 1, 3, 1, 4 };
+    int v = duplicate_find(numbers, sizeof(numbers)/sizeof(int));
+    cout << "test8 : " << v << endl;
+}
+
+int main() {
     test1();
     test2();
     test3();
     test4();
     test5();
     test6();
+
+    test7();
+    test8();
+
+    return 0;
 }
