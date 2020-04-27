@@ -13,10 +13,9 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 //==================================================================
 
 #include <cstdio>
-#include "BinaryTree.h"
+#include "binarytree.h"
 
-BinaryTreeNode* CreateBinaryTreeNode(int value)
-{
+BinaryTreeNode* CreateBinaryTreeNode(int value) {
     BinaryTreeNode* pNode = new BinaryTreeNode();
     pNode->m_nValue = value;
     pNode->m_pLeft = nullptr;
@@ -25,19 +24,15 @@ BinaryTreeNode* CreateBinaryTreeNode(int value)
     return pNode;
 }
 
-void ConnectTreeNodes(BinaryTreeNode* pParent, BinaryTreeNode* pLeft, BinaryTreeNode* pRight)
-{
-    if(pParent != nullptr)
-    {
+void ConnectTreeNodes(BinaryTreeNode* pParent, BinaryTreeNode* pLeft, BinaryTreeNode* pRight) {
+    if(pParent != nullptr) {
         pParent->m_pLeft = pLeft;
         pParent->m_pRight = pRight;
     }
 }
 
-void PrintTreeNode(const BinaryTreeNode* pNode)
-{
-    if(pNode != nullptr)
-    {
+void PrintTreeNode(const BinaryTreeNode* pNode) {
+    if(pNode != nullptr) {
         printf("value of this node is: %d\n", pNode->m_nValue);
 
         if(pNode->m_pLeft != nullptr)
@@ -49,21 +44,17 @@ void PrintTreeNode(const BinaryTreeNode* pNode)
             printf("value of its right child is: %d.\n", pNode->m_pRight->m_nValue);
         else
             printf("right child is nullptr.\n");
-    }
-    else
-    {
+    } else {
         printf("this node is nullptr.\n");
     }
 
     printf("\n");
 }
 
-void PrintTree(const BinaryTreeNode* pRoot)
-{
+void PrintTree(const BinaryTreeNode* pRoot) {
     PrintTreeNode(pRoot);
 
-    if(pRoot != nullptr)
-    {
+    if(pRoot != nullptr) {
         if(pRoot->m_pLeft != nullptr)
             PrintTree(pRoot->m_pLeft);
 
@@ -72,10 +63,8 @@ void PrintTree(const BinaryTreeNode* pRoot)
     }
 }
 
-void DestroyTree(BinaryTreeNode* pRoot)
-{
-    if(pRoot != nullptr)
-    {
+void DestroyTree(BinaryTreeNode* pRoot) {
+    if(pRoot != nullptr) {
         BinaryTreeNode* pLeft = pRoot->m_pLeft;
         BinaryTreeNode* pRight = pRoot->m_pRight;
 

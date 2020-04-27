@@ -18,39 +18,42 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 2, 4, 7, 3, 5, 6, 8}和中序遍历序列{4, 7, 2, 1, 5, 3, 8, 6}，则重建出
 // 图2.6所示的二叉树并输出它的头结点。
 
-#include "..\Utilities\BinaryTree.h"
-#include <exception>
-#include <cstdio>
+#include "../util/binarytree.h"
+#include<exception>
+#include<cstdio>
+#include<iostream>
+#include<cstring>
+using namespace std;
+
 
 BinaryTreeNode* ConstructCore(int* startPreorder, int* endPreorder, int* startInorder, int* endInorder);
 
-BinaryTreeNode* Construct(int* preorder, int* inorder, int length)
-{
+BinaryTreeNode* Construct(int* preorder, int* inorder, int length) {
     if(preorder == nullptr || inorder == nullptr || length <= 0)
         return nullptr;
 
-    return ConstructCore(preorder, preorder + length - 1,
-        inorder, inorder + length - 1);
+    return ConstructCore(preorder, preorder + length - 1, inorder, inorder + length - 1);
 }
 
-BinaryTreeNode* ConstructCore
-(
-    int* startPreorder, int* endPreorder, 
-    int* startInorder, int* endInorder
-)
-{
-    // 前序遍历序列的第一个数字是根结点的值
+
+// 根据二叉树的前序遍历和中序遍历可以确定一个二叉树。
+// 具体的算法：
+//  1. 前序遍历的第一个节点一定是根节点，那前序遍历的下一个节点怎么确定呢？这就要结合中序遍历，在中序遍历中找到根节点的位置，
+//     如果前序遍历的下一个元素位于中序遍历根节点的左侧，则为左节点，如果为右测，则为右节点。
+//  2. 然后找出左子树、右子树，对每个子树进行递归调用
+BinaryTreeNode* ConstructCore(int* startPreorder, int* endPreorder, int* startInorder, int* endInorder) {
+    // 前序遍历序列的第一个元素是根结点的值
     int rootValue = startPreorder[0];
     BinaryTreeNode* root = new BinaryTreeNode();
     root->m_nValue = rootValue;
     root->m_pLeft = root->m_pRight = nullptr;
 
-    if(startPreorder == endPreorder)
-    {
+    if(startPreorder == endPreorder) {
         if(startInorder == endInorder && *startPreorder == *startInorder)
             return root;
-        else
-            throw std::exception("Invalid input.");
+        else {
+            throw std::exception{};
+        }
     }
 
     // 在中序遍历中找到根结点的值
@@ -59,18 +62,16 @@ BinaryTreeNode* ConstructCore
         ++ rootInorder;
 
     if(rootInorder == endInorder && *rootInorder != rootValue)
-        throw std::exception("Invalid input.");
+        throw std::exception{};
 
     int leftLength = rootInorder - startInorder;
     int* leftPreorderEnd = startPreorder + leftLength;
-    if(leftLength > 0)
-    {
+    if(leftLength > 0) {
         // 构建左子树
         root->m_pLeft = ConstructCore(startPreorder + 1, leftPreorderEnd, 
             startInorder, rootInorder - 1);
     }
-    if(leftLength < endPreorder - startPreorder)
-    {
+    if(leftLength < endPreorder - startPreorder) {
         // 构建右子树
         root->m_pRight = ConstructCore(leftPreorderEnd + 1, endPreorder,
             rootInorder + 1, endInorder);
@@ -80,8 +81,7 @@ BinaryTreeNode* ConstructCore
 }
 
 // ====================测试代码====================
-void Test(char* testName, int* preorder, int* inorder, int length)
-{
+void Test(char* testName, int* preorder, int* inorder, int length) {
     if(testName != nullptr)
         printf("%s begins:\n", testName);
 
@@ -95,15 +95,12 @@ void Test(char* testName, int* preorder, int* inorder, int length)
         printf("%d ", inorder[i]);
     printf("\n");
 
-    try
-    {
+    try {
         BinaryTreeNode* root = Construct(preorder, inorder, length);
         PrintTree(root);
 
         DestroyTree(root);
-    }
-    catch(std::exception& exception)
-    {
+    } catch(std::exception& exception) {
         printf("Invalid Input.\n");
     }
 }
@@ -116,8 +113,7 @@ void Test(char* testName, int* preorder, int* inorder, int length)
 //        4       5   6
 //         \         /
 //          7       8
-void Test1()
-{
+void Test1() {
     const int length = 8;
     int preorder[length] = {1, 2, 4, 7, 3, 5, 6, 8};
     int inorder[length] = {4, 7, 2, 1, 5, 3, 8, 6};
@@ -135,8 +131,7 @@ void Test1()
 //      4
 //     /
 //    5
-void Test2()
-{
+void Test2() {
     const int length = 5;
     int preorder[length] = {1, 2, 3, 4, 5};
     int inorder[length] = {5, 4, 3, 2, 1};
@@ -154,8 +149,7 @@ void Test2()
 //                  4
 //                   \
 //                    5
-void Test3()
-{
+void Test3() {
     const int length = 5;
     int preorder[length] = {1, 2, 3, 4, 5};
     int inorder[length] = {1, 2, 3, 4, 5};
@@ -164,8 +158,7 @@ void Test3()
 }
 
 // 树中只有一个结点
-void Test4()
-{
+void Test4() {
     const int length = 1;
     int preorder[length] = {1};
     int inorder[length] = {1};
@@ -179,8 +172,7 @@ void Test4()
 //          2       3  
 //         / \     / \
 //        4   5   6   7
-void Test5()
-{
+void Test5() {
     const int length = 7;
     int preorder[length] = {1, 2, 4, 5, 3, 6, 7};
     int inorder[length] = {4, 2, 5, 1, 6, 3, 7};
@@ -189,14 +181,12 @@ void Test5()
 }
 
 // 输入空指针
-void Test6()
-{
+void Test6() {
     Test("Test6", nullptr, nullptr, 0);
 }
 
 // 输入的两个序列不匹配
-void Test7()
-{
+void Test7() {
     const int length = 7;
     int preorder[length] = {1, 2, 4, 5, 3, 6, 7};
     int inorder[length] = {4, 2, 8, 1, 6, 3, 7};
@@ -204,8 +194,7 @@ void Test7()
     Test("Test7: for unmatched input", preorder, inorder, length);
 }
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     Test1();
     Test2();
     Test3();
