@@ -16,10 +16,11 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 题目：写一个函数，输入n，求斐波那契（Fibonacci）数列的第n项。
 
 #include <cstdio>
+#include <cassert>
 
 // ====================方法1：递归====================
-long long Fibonacci_Solution1(unsigned int n)
-{
+// 递归方法是最容易想到的，但递归存在一个问题，如果n非常大，递归调用的资源开销比较大,并且这种方式重复计算比较多，效率较低。
+long long Fibonacci_Solution1(unsigned int n) {
     if(n <= 0)
         return 0;
 
@@ -30,8 +31,8 @@ long long Fibonacci_Solution1(unsigned int n)
 }
 
 // ====================方法2：循环====================
-long long Fibonacci_Solution2(unsigned n)
-{
+// 斐波那契定义是倒着定义的，但是求的时候可以正向求的.
+long long Fibonacci_Solution2(unsigned n) {
     int result[2] = {0, 1};
     if(n < 2)
         return result[n];
@@ -39,8 +40,7 @@ long long Fibonacci_Solution2(unsigned n)
     long long  fibNMinusOne = 1;
     long long  fibNMinusTwo = 0;
     long long  fibN = 0;
-    for(unsigned int i = 2; i <= n; ++ i)
-    {
+    for(unsigned int i = 2; i <= n; ++ i) {
         fibN = fibNMinusOne + fibNMinusTwo;
 
         fibNMinusTwo = fibNMinusOne;
@@ -51,20 +51,14 @@ long long Fibonacci_Solution2(unsigned n)
 }
 
 // ====================方法3：基于矩阵乘法====================
-#include <cassert>
-
-struct Matrix2By2
-{
-    Matrix2By2
-    (
+// 主要用了线性代数的性质，具体数学原理可以参考 http://www.360doc.com/content/15/0216/14/8728596_448967618.shtml 
+struct Matrix2By2 {
+    Matrix2By2(
         long long m00 = 0, 
         long long m01 = 0, 
         long long m10 = 0, 
         long long m11 = 0
-    )
-    :m_00(m00), m_01(m01), m_10(m10), m_11(m11) 
-    {
-    }
+    ):m_00(m00), m_01(m01), m_10(m10), m_11(m11) {}
 
     long long m_00;
     long long m_01;
@@ -72,12 +66,7 @@ struct Matrix2By2
     long long m_11;
 };
 
-Matrix2By2 MatrixMultiply
-(
-    const Matrix2By2& matrix1, 
-    const Matrix2By2& matrix2
-)
-{
+Matrix2By2 MatrixMultiply(const Matrix2By2& matrix1, const Matrix2By2& matrix2) {
     return Matrix2By2(
         matrix1.m_00 * matrix2.m_00 + matrix1.m_01 * matrix2.m_10,
         matrix1.m_00 * matrix2.m_01 + matrix1.m_01 * matrix2.m_11,
@@ -85,22 +74,16 @@ Matrix2By2 MatrixMultiply
         matrix1.m_10 * matrix2.m_01 + matrix1.m_11 * matrix2.m_11);
 }
 
-Matrix2By2 MatrixPower(unsigned int n)
-{
+Matrix2By2 MatrixPower(unsigned int n) {
     assert(n > 0);
 
     Matrix2By2 matrix;
-    if(n == 1)
-    {
+    if(n == 1) {
         matrix = Matrix2By2(1, 1, 1, 0);
-    }
-    else if(n % 2 == 0)
-    {
+    } else if(n % 2 == 0) {
         matrix = MatrixPower(n / 2);
         matrix = MatrixMultiply(matrix, matrix);
-    }
-    else if(n % 2 == 1)
-    {
+    } else if(n % 2 == 1) {
         matrix = MatrixPower((n - 1) / 2);
         matrix = MatrixMultiply(matrix, matrix);
         matrix = MatrixMultiply(matrix, Matrix2By2(1, 1, 1, 0));
@@ -109,8 +92,7 @@ Matrix2By2 MatrixPower(unsigned int n)
     return matrix;
 }
 
-long long Fibonacci_Solution3(unsigned int n)
-{
+long long Fibonacci_Solution3(unsigned int n) {
     int result[2] = {0, 1};
     if(n < 2)
         return result[n];
@@ -120,8 +102,7 @@ long long Fibonacci_Solution3(unsigned int n)
 }
 
 // ====================测试代码====================
-void Test(int n, int expected)
-{
+void Test(int n, int expected) {
     if(Fibonacci_Solution1(n) == expected)
         printf("Test for %d in solution1 passed.\n", n);
     else
@@ -138,8 +119,7 @@ void Test(int n, int expected)
         printf("Test for %d in solution3 failed.\n", n);
 }
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     Test(0, 0);
     Test(1, 1);
     Test(2, 1);
@@ -156,4 +136,3 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-
