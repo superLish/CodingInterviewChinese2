@@ -17,18 +17,17 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 和deleteHead，分别完成在队列尾部插入结点和在队列头部删除结点的功能。
 
 #include "Queue.h"
+#include<cstdio>
 
 // ====================测试代码====================
-void Test(char actual, char expected)
-{
+void Test(char actual, char expected) {
     if(actual == expected)
         printf("Test passed.\n");
     else
         printf("Test failed.\n");
 }
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     CQueue<char> queue;
 
     queue.appendTail('a');
@@ -54,4 +53,3 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-
