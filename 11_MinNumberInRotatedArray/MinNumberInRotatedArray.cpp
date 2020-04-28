@@ -19,30 +19,80 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 
 #include <cstdio>
 #include <exception>
+#include<algorithm>
+#include<iostream>
+#include<cassert>
+using namespace std;
+
+void print_array(int* a, int begin, int end) {
+    assert(a != nullptr);
+    cout << "array: ";
+    for (int i = begin; i <= end; ++i) {
+        cout << a[i] << " ";
+    }
+    cout << endl;
+}
+
+// reverse array a [begin, end]
+void reverse_array(int* a, const int begin, const int end) {
+    assert(a != nullptr && begin < end && begin >= 0);
+    cout << "before reverse: ";
+    print_array(a, begin, end);
+    for (int b = begin, e = end; b < e; ++b, --e) {
+        int tmp = a[b];
+        a[b] = a[e];
+        a[e] = tmp;
+    }
+    cout << "after reverse: ";
+    print_array(a, begin, end);
+}
+
+// 解法一，翻转数组实现恢复原有序列
+int RevertInOrder(int* a, const int len) {
+    assert(a != nullptr && len > 0);
+    if (1 == len) 
+        return a[0];
+
+    int min_pos = 0;
+    for (int i = 1; i < len; ++i) {
+        if (a[i] < a[i-1]) {
+            min_pos = i;
+            break;
+        }
+    }
+
+    cout << "min_pos: " << min_pos << endl;
+    if (min_pos > 0) {
+        reverse_array(a, 0, min_pos-1);
+        reverse_array(a, min_pos, len-1);
+        reverse_array(a, 0, len-1);
+    }
+
+    return a[0];
+}
+
 
 int MinInOrder(int* numbers, int index1, int index2);
 
-int Min(int* numbers, int length)
-{
+
+// 有点类似于二分查找，只不过因为其并不是严格排序的，而是部分有序，所以增加了一定的处理
+int Min(int* numbers, int length) {
     if(numbers == nullptr || length <= 0)
-        throw new std::exception("Invalid parameters");
+        throw new std::exception();
  
     int index1 = 0;
     int index2 = length - 1;
     int indexMid = index1;
-    while(numbers[index1] >= numbers[index2])
-    {
+    while(numbers[index1] >= numbers[index2]) {
         // 如果index1和index2指向相邻的两个数，
         // 则index1指向第一个递增子数组的最后一个数字，
         // index2指向第二个子数组的第一个数字，也就是数组中的最小数字
-        if(index2 - index1 == 1)
-        {
+        if(index2 - index1 == 1) {
             indexMid = index2;
             break;
         }
  
-        // 如果下标为index1、index2和indexMid指向的三个数字相等，
-        // 则只能顺序查找
+        // 如果下标为index1、index2和indexMid指向的三个数字相等，则只能顺序查找， 主要是为了处理重复数字可能导致的情况
         indexMid = (index1 + index2) / 2;
         if(numbers[index1] == numbers[index2] && numbers[indexMid] == numbers[index1])
             return MinInOrder(numbers, index1, index2);
@@ -57,11 +107,9 @@ int Min(int* numbers, int length)
     return numbers[indexMid];
 }
 
-int MinInOrder(int* numbers, int index1, int index2)
-{
+int MinInOrder(int* numbers, int index1, int index2) {
     int result = numbers[index1];
-    for(int i = index1 + 1; i <= index2; ++i)
-    {
+    for(int i = index1 + 1; i <= index2; ++i) {
         if(result > numbers[i])
             result = numbers[i];
     }
@@ -70,8 +118,7 @@ int MinInOrder(int* numbers, int index1, int index2)
 }
 
 // ====================测试代码====================
-void Test(int* numbers, int length, int expected)
-{
+void Test(int* numbers, int length, int expected) {
     int result = 0;
     try
     {
@@ -94,8 +141,7 @@ void Test(int* numbers, int length, int expected)
     }
 }
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     // 典型输入，单调升序的数组的一个旋转
     int array1[] = { 3, 4, 5, 1, 2 };
     Test(array1, sizeof(array1) / sizeof(int), 1);
@@ -122,6 +168,10 @@ int main(int argc, char* argv[])
 
     // 输入nullptr
     Test(nullptr, 0, 0);
+
+    int a[] = { 3, 4, 5, 1, 2 };
+    int v = RevertInOrder(a, sizeof(a)/sizeof(int));
+    cout << "min value: " << v << endl;
 
     return 0;
 }
