@@ -24,3 +24,5 @@
 [面试题10：斐波那契数列](./10_Fibonacci)
 
 [面试题11：旋转数组的最小数字](./11_MinNumberInRotatedArray)
+
+[面试题12：矩阵中的路径](./12_StringPathInMatrix)
