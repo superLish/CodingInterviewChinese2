@@ -28,3 +28,5 @@
 [面试题12：矩阵中的路径](./12_StringPathInMatrix)
 
 [面试题13：机器人的运动范围](./13_RobotMove)
+
+[面试题14：剪绳子](./14_CuttingRope)
