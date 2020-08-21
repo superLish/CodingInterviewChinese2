@@ -235,7 +235,7 @@ void Test12() {
     Test("Test12", nullptr, 0, 0, nullptr, false);
 }
 
-int main(int argc, char* argv[]) {
+int main() {
     Test1();
     Test2();
     Test3();
