@@ -17,28 +17,28 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 把9表示成二进制是1001，有2位是1。因此如果输入9，该函数输出2。
 
 #include <cstdio>
+#include <cmath>
+using namespace std;
 
-int NumberOf1_Solution1(int n)
-{
+
+int NumberOf1_Solution1(int n) {
     int count = 0;
     unsigned int flag = 1;
-    while (flag)
-    {
+    while (flag) {
         if (n & flag)
             count++;
 
-        flag = flag << 1;
+        flag = flag << 1;       // 移动flag，int型共移动32次
     }
 
     return count;
 }
 
-int NumberOf1_Solution2(int n)
-{
+// 这种比较难想到： 把一个整数减去1，再和原整数做与运算，会把该整数最后边的1变成0
+int NumberOf1_Solution2(int n) {
     int count = 0;
 
-    while (n)
-    {
+    while (n) {
         ++count;
         n = (n - 1) & n;
     }
@@ -46,9 +46,33 @@ int NumberOf1_Solution2(int n)
     return count;
 }
 
+// 最容易想到的解法，当然，性能也是最差的。
+int NumberOf1_Solution3(int number) {
+    int n = number;
+    if (0 == number) {
+        return 0;
+    }
+
+    int count = 0;
+    if (n < 0) {
+        n = std::abs(n);
+        ++count;
+    }
+
+    if (number > 0) {
+        while(number > 0) {
+            if (number & 1 == 1) {
+                ++count;
+            } 
+            number = number >> 1;
+        }
+    }
+
+    return count;
+}
+
 // ====================测试代码====================
-void Test(int number, unsigned int expected)
-{
+void Test(int number, unsigned int expected) {
     int actual = NumberOf1_Solution1(number);
     if (actual == expected)
         printf("Solution1: Test for %p passed.\n", number);
@@ -61,11 +85,16 @@ void Test(int number, unsigned int expected)
     else
         printf("Solution2: Test for %p failed.\n", number);
 
+    actual = NumberOf1_Solution3(number);
+    if (actual == expected)
+        printf("Solution3: Test for %p passed.\n", number);
+    else
+        printf("Solution3: Test for %p failed.\n", number);
+
     printf("\n");
 }
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     // 输入0，期待的输出是0
     Test(0, 0);
 
