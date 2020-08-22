@@ -23,12 +23,12 @@ bool g_InvalidInput = false;
 bool equal(double num1, double num2);
 double PowerWithUnsignedExponent(double base, unsigned int exponent);
 
-double Power(double base, int exponent)
-{
+
+// 关键是要考虑到各种情况，exponent有可能是正数、负数、0，要考虑到
+double Power(double base, int exponent) {
     g_InvalidInput = false;
 
-    if (equal(base, 0.0) && exponent < 0)
-    {
+    if (equal(base, 0.0) && exponent < 0) {
         g_InvalidInput = true;
         return 0.0;
     }
@@ -56,8 +56,7 @@ double PowerWithUnsignedExponent(double base, unsigned int exponent)
 }
 */
 
-double PowerWithUnsignedExponent(double base, unsigned int exponent)
-{
+double PowerWithUnsignedExponent(double base, unsigned int exponent) {
     if (exponent == 0)
         return 1;
     if (exponent == 1)
@@ -71,8 +70,7 @@ double PowerWithUnsignedExponent(double base, unsigned int exponent)
     return result;
 }
 
-bool equal(double num1, double num2)
-{
+bool equal(double num1, double num2) {
     if ((num1 - num2 > -0.0000001) && (num1 - num2 < 0.0000001))
         return true;
     else
@@ -80,8 +78,7 @@ bool equal(double num1, double num2)
 }
 
 // ====================测试代码====================
-void Test(const char* testName, double base, int exponent, double expectedResult, bool expectedFlag)
-{
+void Test(const char* testName, double base, int exponent, double expectedResult, bool expectedFlag) {
     double result = Power(base, exponent);
     if (equal(result, expectedResult) && g_InvalidInput == expectedFlag)
         std::cout << testName << " passed" << std::endl;
@@ -89,8 +86,7 @@ void Test(const char* testName, double base, int exponent, double expectedResult
         std::cout << testName << " FAILED" << std::endl;
 }
 
-int main(int argc, char* argv[])
-{
+int main() {
     // 底数、指数都为正数
     Test("Test1", 2, 3, 8, false);
 
