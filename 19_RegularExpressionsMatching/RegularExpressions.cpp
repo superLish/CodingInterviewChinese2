@@ -18,28 +18,28 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 中，匹配是指字符串的所有字符匹配整个模式。例如，字符串"aaa"与模式"a.a"
 // 和"ab*ac*a"匹配，但与"aa.a"及"ab*a"均不匹配。
 
+
+// 思路： 我们学习编译原理的时候，在处理大量字符的时候，会涉及到各种状态机，这里同样用状态机解决。
+// 在状态转换的很多问题里，都可以把问题抽象为状态机去解决，画出状态机后，问题会非常清晰。
 #include <cstdio>
 
 bool matchCore(const char* str, const char* pattern);
 
-bool match(const char* str, const char* pattern)
-{
+bool match(const char* str, const char* pattern) {
     if(str == nullptr || pattern == nullptr)
         return false;
 
     return matchCore(str, pattern);
 }
 
-bool matchCore(const char* str, const char* pattern)
-{
+bool matchCore(const char* str, const char* pattern) {
     if(*str == '\0' && *pattern == '\0')
         return true;
 
     if(*str != '\0' && *pattern == '\0')
         return false;
 
-    if(*(pattern + 1) == '*')
-    {
+    if(*(pattern + 1) == '*') {
         if(*pattern == *str || (*pattern == '.' && *str != '\0'))
             // 进入有限状态机的下一个状态
             return matchCore(str + 1, pattern + 2)
@@ -59,8 +59,7 @@ bool matchCore(const char* str, const char* pattern)
 }
 
 // ====================测试代码====================
-void Test(const char* testName, const char* string, const char* pattern, bool expected)
-{
+void Test(const char* testName, const char* string, const char* pattern, bool expected) {
     if(testName != nullptr)
         printf("%s begins: ", testName);
 
@@ -70,8 +69,7 @@ void Test(const char* testName, const char* string, const char* pattern, bool ex
         printf("FAILED.\n");
 }
 
-int main(int argc, char* argv[])
-{
+int main() {
     Test("Test01", "", "", true);
     Test("Test02", "", ".*", true);
     Test("Test03", "", ".", false);
@@ -105,4 +103,3 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-
