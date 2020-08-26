@@ -31,11 +31,15 @@
 
 [面试题14：剪绳子](./14_CuttingRope)——动态规划
 
-[面试题15：二进制中1的个数](./15_NumberOfBinary.cpp)
+[面试题15：二进制中1的个数](./15_NumberOfBinary)
 
 [面试题16：数值的整数次方](./16_Power)
 
+[面试题17：打印1到最大的n位数](./17_Print1ToMaxOfNDigits)
 
+[面试题18：01.在O(1)时间删除链表结点](./18_01_DeleteNodeInList)
+
+[面试题18: 02.删除链表中重复的结点](./18_02_DeleteDuplicatedNode)
 
 ### 思路总结
 

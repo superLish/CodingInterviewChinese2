@@ -16,8 +16,7 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 #include <stdio.h>
 #include <stdlib.h>
 
-ListNode* CreateListNode(int value)
-{
+ListNode* CreateListNode(int value) {
     ListNode* pNode = new ListNode();
     pNode->m_nValue = value;
     pNode->m_pNext = nullptr;
@@ -25,10 +24,8 @@ ListNode* CreateListNode(int value)
     return pNode;
 }
 
-void ConnectListNodes(ListNode* pCurrent, ListNode* pNext)
-{
-    if(pCurrent == nullptr)
-    {
+void ConnectListNodes(ListNode* pCurrent, ListNode* pNext) {
+    if(pCurrent == nullptr) {
         printf("Error to connect two nodes.\n");
         exit(1);
     }

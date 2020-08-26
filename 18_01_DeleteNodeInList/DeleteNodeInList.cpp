@@ -13,20 +13,19 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 //==================================================================
 
 // 面试题18（一）：在O(1)时间删除链表结点
-// 题目：给定单向链表的头指针和一个结点指针，定义一个函数在O(1)时间删除该
-// 结点。
+// 题目：给定单向链表的头指针和一个结点指针，定义一个函数在O(1)时间删除该结点。
 
 #include <cstdio>
-#include "..\Utilities\List.h"
+#include "../util/list.h"
 
-void DeleteNode(ListNode** pListHead, ListNode* pToBeDeleted)
-{
+// 思路： 在O（1）的时间删除节点，肯定不能采用遍历单向链表找到前驱节点的方法删除该节点，前驱节点我们不知道，但我们知道后驱节点呀，
+// 把后驱节点的值拷贝到当前要被删除的节点，然后删除后驱节点，就相当于删除了当前节点。而删除后驱节点是不用遍历当前链表的，所以O(1)。
+void DeleteNode(ListNode** pListHead, ListNode* pToBeDeleted) {
     if(!pListHead || !pToBeDeleted)
         return;
 
     // 要删除的结点不是尾结点
-    if(pToBeDeleted->m_pNext != nullptr)
-    {
+    if(pToBeDeleted->m_pNext != nullptr) {
         ListNode* pNext = pToBeDeleted->m_pNext;
         pToBeDeleted->m_nValue = pNext->m_nValue;
         pToBeDeleted->m_pNext = pNext->m_pNext;
@@ -35,18 +34,15 @@ void DeleteNode(ListNode** pListHead, ListNode* pToBeDeleted)
         pNext = nullptr;
     }
     // 链表只有一个结点，删除头结点（也是尾结点）
-    else if(*pListHead == pToBeDeleted)
-    {
+    else if(*pListHead == pToBeDeleted) {
         delete pToBeDeleted;
         pToBeDeleted = nullptr;
         *pListHead = nullptr;
     }
     // 链表中有多个结点，删除尾结点
-    else
-    {
+    else {
         ListNode* pNode = *pListHead;
-        while(pNode->m_pNext != pToBeDeleted)
-        {
+        while(pNode->m_pNext != pToBeDeleted) {
             pNode = pNode->m_pNext;            
         }
  
@@ -57,8 +53,7 @@ void DeleteNode(ListNode** pListHead, ListNode* pToBeDeleted)
 }
 
 // ====================测试代码====================
-void Test(ListNode* pListHead, ListNode* pNode)
-{
+void Test(ListNode* pListHead, ListNode* pNode) {
     printf("The original list is: \n");
     PrintList(pListHead);
 
@@ -72,8 +67,7 @@ void Test(ListNode* pListHead, ListNode* pNode)
 }
 
 // 链表中有多个结点，删除中间的结点
-void Test1()
-{
+void Test1() {
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
     ListNode* pNode3 = CreateListNode(3);
@@ -91,8 +85,7 @@ void Test1()
 }
 
 // 链表中有多个结点，删除尾结点
-void Test2()
-{
+void Test2() {
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
     ListNode* pNode3 = CreateListNode(3);
@@ -110,8 +103,7 @@ void Test2()
 }
 
 // 链表中有多个结点，删除头结点
-void Test3()
-{
+void Test3() {
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
     ListNode* pNode3 = CreateListNode(3);
@@ -129,21 +121,18 @@ void Test3()
 }
 
 // 链表中只有一个结点，删除头结点
-void Test4()
-{
+void Test4() {
     ListNode* pNode1 = CreateListNode(1);
 
     Test(pNode1, pNode1);
 }
 
 // 链表为空
-void Test5()
-{
+void Test5() {
     Test(nullptr, nullptr);
 }
 
-int main(int argc, char* argv[])
-{
+int main() {
     Test1();
     Test2();
     Test3();
