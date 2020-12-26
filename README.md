@@ -13,9 +13,9 @@
 
 [面试题5：替换空格](./05_ReplaceSpaces)
 
-[面试题6：从尾到头打印链表](./06_PrintListInReverseOrder)
+[面试题6：从尾到头打印链表](./06_PrintListInReversedOrder)
 
-[面试题7：重建二叉树](./07_COnstructBinaryTree)
+[面试题7：重建二叉树](./07_ConstructBinaryTree)
 
 [面试题8：二叉树的下一个结点](./08_NextNodeInBinaryTrees)
 
