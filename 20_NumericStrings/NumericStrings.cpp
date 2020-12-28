@@ -24,16 +24,14 @@ bool scanInteger(const char** str);
 
 // 数字的格式可以用A[.[B]][e|EC]或者.B[e|EC]表示，其中A和C都是
 // 整数（可以有正负号，也可以没有），而B是一个无符号整数
-bool isNumeric(const char* str)
-{
+bool isNumeric(const char* str) {
     if(str == nullptr)
         return false;
 
     bool numeric = scanInteger(&str);
 
     // 如果出现'.'，接下来是数字的小数部分
-    if(*str == '.')
-    {
+    if(*str == '.') {
         ++str;
 
         // 下面一行代码用||的原因：
@@ -44,8 +42,7 @@ bool isNumeric(const char* str)
     }
 
     // 如果出现'e'或者'E'，接下来跟着的是数字的指数部分
-    if(*str == 'e' || *str == 'E')
-    {
+    if(*str == 'e' || *str == 'E') {
         ++str;
 
         // 下面一行代码用&&的原因：
@@ -57,8 +54,7 @@ bool isNumeric(const char* str)
     return numeric && *str == '\0';
 }
 
-bool scanUnsignedInteger(const char** str)
-{
+bool scanUnsignedInteger(const char** str) {
     const char* before = *str;
     while(**str != '\0' && **str >= '0' && **str <= '9')
         ++(*str);
@@ -68,16 +64,14 @@ bool scanUnsignedInteger(const char** str)
 }
 
 // 整数的格式可以用[+|-]B表示, 其中B为无符号整数
-bool scanInteger(const char** str)
-{
+bool scanInteger(const char** str) {
     if(**str == '+' || **str == '-')
         ++(*str);
     return scanUnsignedInteger(str);
 }
 
 // ====================测试代码====================
-void Test(const char* testName, const char* str, bool expected)
-{
+void Test(const char* testName, const char* str, bool expected) {
     if(testName != nullptr)
         printf("%s begins: ", testName);
 
@@ -88,8 +82,7 @@ void Test(const char* testName, const char* str, bool expected)
 }
 
 
-int main(int argc, char* argv[])
-{
+int main() {
     Test("Test1", "100", true);
     Test("Test2", "123.45e+6", true);
     Test("Test3", "+500", true);
