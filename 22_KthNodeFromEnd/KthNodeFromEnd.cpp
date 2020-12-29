@@ -19,29 +19,27 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 值为4的结点。
 
 #include <cstdio>
-#include "..\Utilities\List.h"
+#include "../util/list.h"
 
-ListNode* FindKthToTail(ListNode* pListHead, unsigned int k)
-{
+
+// 思路比较简单，用两个指针去探索，两个指针相距k，前面的指针探索到尾节点的时候，也就是后面的指针探索到倒数第k个节点的时候。
+ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) {
     if(pListHead == nullptr || k == 0)
         return nullptr;
 
     ListNode *pAhead = pListHead;
     ListNode *pBehind = nullptr;
 
-    for(unsigned int i = 0; i < k - 1; ++ i)
-    {
+    for(unsigned int i = 0; i < k - 1; ++ i) {
         if(pAhead->m_pNext != nullptr)
             pAhead = pAhead->m_pNext;
-        else
-        {
+        else {
             return nullptr;
         }
     }
 
     pBehind = pListHead;
-    while(pAhead->m_pNext != nullptr)
-    {
+    while(pAhead->m_pNext != nullptr) {
         pAhead = pAhead->m_pNext;
         pBehind = pBehind->m_pNext;
     }
@@ -51,8 +49,7 @@ ListNode* FindKthToTail(ListNode* pListHead, unsigned int k)
 
 // ====================测试代码====================
 // 测试要找的结点在链表中间
-void Test1()
-{
+void Test1() {
     printf("=====Test1 starts:=====\n");
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
@@ -73,8 +70,7 @@ void Test1()
 }
 
 // 测试要找的结点是链表的尾结点
-void Test2()
-{
+void Test2() {
     printf("=====Test2 starts:=====\n");
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
@@ -95,8 +91,7 @@ void Test2()
 }
 
 // 测试要找的结点是链表的头结点
-void Test3()
-{
+void Test3() {
     printf("=====Test3 starts:=====\n");
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
@@ -117,8 +112,7 @@ void Test3()
 }
 
 // 测试空链表
-void Test4()
-{
+void Test4() {
     printf("=====Test4 starts:=====\n");
     printf("expected result: nullptr.\n");
     ListNode* pNode = FindKthToTail(nullptr, 100);
@@ -126,8 +120,7 @@ void Test4()
 }
 
 // 测试输入的第二个参数大于链表的结点总数
-void Test5()
-{
+void Test5() {
     printf("=====Test5 starts:=====\n");
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
@@ -148,8 +141,7 @@ void Test5()
 }
 
 // 测试输入的第二个参数为0
-void Test6()
-{
+void Test6() {
     printf("=====Test6 starts:=====\n");
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
@@ -169,8 +161,7 @@ void Test6()
     DestroyList(pNode1);
 }
 
-int main(int argc, char* argv[])
-{
+int main() {
     Test1();
     Test2();
     Test3();
