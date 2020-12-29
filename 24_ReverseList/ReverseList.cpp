@@ -17,15 +17,14 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 头结点。
 
 #include <cstdio>
-#include "..\Utilities\List.h"
+#include "../util/list.h"
 
-ListNode* ReverseList(ListNode* pHead)
-{
+
+ListNode* ReverseList(ListNode* pHead) {
     ListNode* pReversedHead = nullptr;
     ListNode* pNode = pHead;
     ListNode* pPrev = nullptr;
-    while(pNode != nullptr)
-    {
+    while(pNode != nullptr) {
         ListNode* pNext = pNode->m_pNext;
 
         if(pNext == nullptr)
@@ -40,9 +39,9 @@ ListNode* ReverseList(ListNode* pHead)
     return pReversedHead;
 }
 
+
 // ====================测试代码====================
-ListNode* Test(ListNode* pHead)
-{
+ListNode* Test(ListNode* pHead) {
     printf("The original list is: \n");
     PrintList(pHead);
 
@@ -55,8 +54,7 @@ ListNode* Test(ListNode* pHead)
 }
 
 // 输入的链表有多个结点
-void Test1()
-{
+void Test1() {
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
     ListNode* pNode3 = CreateListNode(3);
@@ -74,8 +72,7 @@ void Test1()
 }
 
 // 输入的链表只有一个结点
-void Test2()
-{
+void Test2() {
     ListNode* pNode1 = CreateListNode(1);
 
     ListNode* pReversedHead = Test(pNode1);
@@ -84,13 +81,11 @@ void Test2()
 }
 
 // 输入空链表
-void Test3()
-{
+void Test3() {
     Test(nullptr);
 }
 
-int main(int argc, char* argv[])
-{
+int main() {
     Test1();
     Test2();
     Test3();
