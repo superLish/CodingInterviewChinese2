@@ -17,10 +17,12 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 环的入口结点是结点3。
 
 #include <cstdio>
-#include "../Utilities/list.h"
+#include "../util/list.h"
 
-ListNode* MeetingNode(ListNode* pHead)
-{
+
+// 对于这个问题，首先考虑的是怎么检测到有环存在，在有闭环的前提下，入口节点一定是闭环中的一个。
+// 检测环的存在可以用两个指针，一个跑的慢，一个跑的快，如果有环的话，快的一定会反过来追上慢的，就像操场跑步绕圈一样，如果没有，快的到nullptr就结束了。
+ListNode* MeetingNode(ListNode* pHead) {
     if(pHead == nullptr)
         return nullptr;
 
@@ -29,8 +31,7 @@ ListNode* MeetingNode(ListNode* pHead)
         return nullptr;
 
     ListNode* pFast = pSlow->m_pNext;
-    while(pFast != nullptr && pSlow != nullptr)
-    {
+    while(pFast != nullptr && pSlow != nullptr) {
         if(pFast == pSlow)
             return pFast;
 
@@ -44,8 +45,9 @@ ListNode* MeetingNode(ListNode* pHead)
     return nullptr;
 }
 
-ListNode* EntryNodeOfLoop(ListNode* pHead)
-{
+// 经过上面知道存在环之后，确定环的节点数k，还是两个指针的思路，让一个先走k步，如果是第n个节点为入口节点
+// 那么n+k = n， 因为k是一个环，走了k步后相当于没走，这样，当两个指针相遇的时候，就是入口节点。
+ListNode* EntryNodeOfLoop(ListNode* pHead) {
     ListNode* meetingNode = MeetingNode(pHead);
     if(meetingNode == nullptr)
         return nullptr;
@@ -53,8 +55,7 @@ ListNode* EntryNodeOfLoop(ListNode* pHead)
     // 得到环中结点的数目
     int nodesInLoop = 1;
     ListNode* pNode1 = meetingNode;
-    while(pNode1->m_pNext != meetingNode)
-    {
+    while(pNode1->m_pNext != meetingNode) {
         pNode1 = pNode1->m_pNext;
         ++nodesInLoop;
     }
@@ -66,8 +67,7 @@ ListNode* EntryNodeOfLoop(ListNode* pHead)
 
     // 再移动pNode1和pNode2
     ListNode* pNode2 = pHead;
-    while(pNode1 != pNode2)
-    {
+    while(pNode1 != pNode2) {
         pNode1 = pNode1->m_pNext;
         pNode2 = pNode2->m_pNext;
     }
@@ -76,8 +76,7 @@ ListNode* EntryNodeOfLoop(ListNode* pHead)
 }
 
 // ==================== Test Code ====================
-void Test(char* testName, ListNode* pHead, ListNode* entryNode)
-{
+void Test(char* testName, ListNode* pHead, ListNode* entryNode) {
     if(testName != nullptr)
         printf("%s begins: ", testName);
 
@@ -88,8 +87,7 @@ void Test(char* testName, ListNode* pHead, ListNode* entryNode)
 }
 
 // A list has a node, without a loop
-void Test1()
-{
+void Test1() {
     ListNode* pNode1 = CreateListNode(1);
 
     Test("Test1", pNode1, nullptr);
@@ -98,8 +96,7 @@ void Test1()
 }
 
 // A list has a node, with a loop
-void Test2()
-{
+void Test2() {
     ListNode* pNode1 = CreateListNode(1);
     ConnectListNodes(pNode1, pNode1);
 
@@ -110,8 +107,7 @@ void Test2()
 }
 
 // A list has multiple nodes, with a loop 
-void Test3()
-{
+void Test3() {
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
     ListNode* pNode3 = CreateListNode(3);
@@ -139,8 +135,7 @@ void Test3()
 }
 
 // A list has multiple nodes, with a loop 
-void Test4()
-{
+void Test4() {
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
     ListNode* pNode3 = CreateListNode(3);
@@ -168,8 +163,7 @@ void Test4()
 }
 
 // A list has multiple nodes, with a loop 
-void Test5()
-{
+void Test5() {
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
     ListNode* pNode3 = CreateListNode(3);
@@ -197,8 +191,7 @@ void Test5()
 }
 
 // A list has multiple nodes, without a loop 
-void Test6()
-{
+void Test6() {
     ListNode* pNode1 = CreateListNode(1);
     ListNode* pNode2 = CreateListNode(2);
     ListNode* pNode3 = CreateListNode(3);
@@ -216,13 +209,11 @@ void Test6()
 }
 
 // Empty list
-void Test7()
-{
+void Test7() {
     Test("Test7", nullptr, nullptr);
 }
 
-int main(int argc, char* argv[])
-{
+int main() {
     Test1();
     Test2();
     Test3();
