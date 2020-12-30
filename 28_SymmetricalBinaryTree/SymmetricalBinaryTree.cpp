@@ -17,17 +17,15 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 它的镜像一样，那么它是对称的。
 
 #include <cstdio>
-#include "../Utilities/BinaryTree.h"
+#include "../util/binarytree.h"
 
 bool isSymmetrical(BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2);
 
-bool isSymmetrical(BinaryTreeNode* pRoot)
-{
+bool isSymmetrical(BinaryTreeNode* pRoot) {
     return isSymmetrical(pRoot, pRoot);
 }
 
-bool isSymmetrical(BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2)
-{
+bool isSymmetrical(BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2) {
     if(pRoot1 == nullptr && pRoot2 == nullptr)
         return true;
 
@@ -42,8 +40,7 @@ bool isSymmetrical(BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2)
 }
 
 // ====================测试代码====================
-void Test(char* testName, BinaryTreeNode* pRoot, bool expected)
-{
+void Test(char* testName, BinaryTreeNode* pRoot, bool expected) {
     if(testName != nullptr)
         printf("%s begins: ", testName);
 
@@ -56,8 +53,7 @@ void Test(char* testName, BinaryTreeNode* pRoot, bool expected)
 //            8
 //        6      6
 //       5 7    7 5
-void Test1()
-{
+void Test1() {
     BinaryTreeNode* pNode8 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNode61 = CreateBinaryTreeNode(6);
     BinaryTreeNode* pNode62 = CreateBinaryTreeNode(6);
@@ -78,8 +74,7 @@ void Test1()
 //            8
 //        6      9
 //       5 7    7 5
-void Test2()
-{
+void Test2() {
     BinaryTreeNode* pNode8 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNode61 = CreateBinaryTreeNode(6);
     BinaryTreeNode* pNode9 = CreateBinaryTreeNode(9);
@@ -100,8 +95,7 @@ void Test2()
 //            8
 //        6      6
 //       5 7    7
-void Test3()
-{
+void Test3() {
     BinaryTreeNode* pNode8 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNode61 = CreateBinaryTreeNode(6);
     BinaryTreeNode* pNode62 = CreateBinaryTreeNode(6);
@@ -127,8 +121,7 @@ void Test3()
 //         2           2
 //        /             \
 //       1               1
-void Test4()
-{
+void Test4() {
     BinaryTreeNode* pNode5 = CreateBinaryTreeNode(5);
     BinaryTreeNode* pNode31 = CreateBinaryTreeNode(3);
     BinaryTreeNode* pNode32 = CreateBinaryTreeNode(3);
@@ -162,8 +155,7 @@ void Test4()
 //         6           2
 //        /             \
 //       1               1
-void Test5()
-{
+void Test5() {
     BinaryTreeNode* pNode5 = CreateBinaryTreeNode(5);
     BinaryTreeNode* pNode31 = CreateBinaryTreeNode(3);
     BinaryTreeNode* pNode32 = CreateBinaryTreeNode(3);
@@ -196,8 +188,7 @@ void Test5()
 //         2           2
 //                      \
 //                       1
-void Test6()
-{
+void Test6() {
     BinaryTreeNode* pNode5 = CreateBinaryTreeNode(5);
     BinaryTreeNode* pNode31 = CreateBinaryTreeNode(3);
     BinaryTreeNode* pNode32 = CreateBinaryTreeNode(3);
@@ -221,8 +212,7 @@ void Test6()
 }
 
 // 只有一个结点
-void Test7()
-{
+void Test7() {
     BinaryTreeNode* pNode1 = CreateBinaryTreeNode(1);
     Test("Test7", pNode1, true);
 
@@ -230,8 +220,7 @@ void Test7()
 }
 
 // 没有结点
-void Test8()
-{
+void Test8() {
     Test("Test8", nullptr, true);
 }
 
@@ -243,8 +232,7 @@ void Test8()
 //           5       5
 //          /         \
 //         5           5
-void Test9()
-{
+void Test9() {
     BinaryTreeNode* pNode1 = CreateBinaryTreeNode(5);
     BinaryTreeNode* pNode21 = CreateBinaryTreeNode(5);
     BinaryTreeNode* pNode22 = CreateBinaryTreeNode(5);
@@ -274,8 +262,7 @@ void Test9()
 //           5       5
 //          /       /
 //         5       5
-void Test10()
-{
+void Test10() {
     BinaryTreeNode* pNode1 = CreateBinaryTreeNode(5);
     BinaryTreeNode* pNode21 = CreateBinaryTreeNode(5);
     BinaryTreeNode* pNode22 = CreateBinaryTreeNode(5);
@@ -297,8 +284,7 @@ void Test10()
     DestroyTree(pNode1);
 }
 
-void main(int argc, char* argv[])
-{
+int main() {
     Test1();
     Test2();
     Test3();
@@ -309,4 +295,6 @@ void main(int argc, char* argv[])
     Test8();
     Test9();
     Test10();
+
+    return 0;
 }

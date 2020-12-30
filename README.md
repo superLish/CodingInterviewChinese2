@@ -31,7 +31,7 @@
 [面试题25：合并两个排序的链表](./25_MergeSortedLists/MergeSortedLists.cpp)          
 [面试题26：树的子结构](./26_SubstructureInTree/SubstructureInTree.cpp)                  
 [面试题27：二叉树的镜像](./27_MirrorOfBinaryTree/MirrorOfBinaryTree.cpp)            
-
+[面试题28：对称的二叉树](./28_SymmetricalBinaryTree.cpp)
 
 ---
 ### 总结
