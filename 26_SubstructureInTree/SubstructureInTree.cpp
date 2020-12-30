@@ -17,8 +17,7 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 
 #include <cstdio>
 
-struct BinaryTreeNode
-{
+struct BinaryTreeNode {
     double                 m_dbValue;
     BinaryTreeNode*        m_pLeft;
     BinaryTreeNode*        m_pRight;
@@ -27,12 +26,11 @@ struct BinaryTreeNode
 bool DoesTree1HaveTree2(BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2);
 bool Equal(double num1, double num2);
 
-bool HasSubtree(BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2)
-{
+// 第一步是遍历树Ａ，找到A中与树B根节点相等的节点
+bool HasSubtree(BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2) {
     bool result = false;
 
-    if(pRoot1 != nullptr && pRoot2 != nullptr)
-    {
+    if(pRoot1 != nullptr && pRoot2 != nullptr) {
         if(Equal(pRoot1->m_dbValue, pRoot2->m_dbValue))
             result = DoesTree1HaveTree2(pRoot1, pRoot2);
         if(!result)
@@ -44,23 +42,24 @@ bool HasSubtree(BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2)
     return result;
 }
 
-bool DoesTree1HaveTree2(BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2)
-{
-    if(pRoot2 == nullptr)
+// 在第一步的条件下，进行两个子树的比对，递归实现，子树根节点比对结束后，递归比对各自的左子树和右子树
+bool DoesTree1HaveTree2(BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2) {
+    if(pRoot2 == nullptr)   // 子树节点全部比对完了，表明是树A的子树
         return true;
 
-    if(pRoot1 == nullptr)
+    if(pRoot1 == nullptr)   // A的子树提前没有了，表明B不是A的子树
         return false;
 
-    if(!Equal(pRoot1->m_dbValue, pRoot2->m_dbValue))
+    if(!Equal(pRoot1->m_dbValue, pRoot2->m_dbValue))    // 值不相等，肯定不是
         return false;
 
+    // 递归比较各自的左子树和右子树
     return DoesTree1HaveTree2(pRoot1->m_pLeft, pRoot2->m_pLeft) &&
         DoesTree1HaveTree2(pRoot1->m_pRight, pRoot2->m_pRight);
 }
 
-bool Equal(double num1, double num2)
-{
+// 注意浮点数的比较
+bool Equal(double num1, double num2) {
     if((num1 - num2 > -0.0000001) && (num1 - num2 < 0.0000001))
         return true;
     else
@@ -68,8 +67,7 @@ bool Equal(double num1, double num2)
 }
 
 // ====================辅助测试代码====================
-BinaryTreeNode* CreateBinaryTreeNode(double dbValue)
-{
+BinaryTreeNode* CreateBinaryTreeNode(double dbValue) {
     BinaryTreeNode* pNode = new BinaryTreeNode();
     pNode->m_dbValue = dbValue;
     pNode->m_pLeft = nullptr;
@@ -78,19 +76,15 @@ BinaryTreeNode* CreateBinaryTreeNode(double dbValue)
     return pNode;
 }
 
-void ConnectTreeNodes(BinaryTreeNode* pParent, BinaryTreeNode* pLeft, BinaryTreeNode* pRight)
-{
-    if(pParent != nullptr)
-    {
+void ConnectTreeNodes(BinaryTreeNode* pParent, BinaryTreeNode* pLeft, BinaryTreeNode* pRight) {
+    if(pParent != nullptr) {
         pParent->m_pLeft = pLeft;
         pParent->m_pRight = pRight;
     }
 }
 
-void DestroyTree(BinaryTreeNode* pRoot)
-{
-    if(pRoot != nullptr)
-    {
+void DestroyTree(BinaryTreeNode* pRoot) {
+    if(pRoot != nullptr) {
         BinaryTreeNode* pLeft = pRoot->m_pLeft;
         BinaryTreeNode* pRight = pRoot->m_pRight;
 
@@ -103,8 +97,7 @@ void DestroyTree(BinaryTreeNode* pRoot)
 }
 
 // ====================测试代码====================
-void Test(char* testName, BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2, bool expected)
-{
+void Test(char* testName, BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2, bool expected) {
     if(HasSubtree(pRoot1, pRoot2) == expected)
         printf("%s passed.\n", testName);
     else
@@ -119,8 +112,7 @@ void Test(char* testName, BinaryTreeNode* pRoot1, BinaryTreeNode* pRoot2, bool e
 //          9     2
 //               / \
 //              4   7
-void Test1()
-{
+void Test1() {
     BinaryTreeNode* pNodeA1 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNodeA2 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNodeA3 = CreateBinaryTreeNode(7);
@@ -153,8 +145,7 @@ void Test1()
 //          9     3
 //               / \
 //              4   7
-void Test2()
-{
+void Test2() {
     BinaryTreeNode* pNodeA1 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNodeA2 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNodeA3 = CreateBinaryTreeNode(7);
@@ -189,8 +180,7 @@ void Test2()
 //        2        
 //       /
 //      5
-void Test3()
-{
+void Test3() {
     BinaryTreeNode* pNodeA1 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNodeA2 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNodeA3 = CreateBinaryTreeNode(9);
@@ -225,8 +215,7 @@ void Test3()
 //        2        
 //       /
 //      5
-void Test4()
-{
+void Test4() {
     BinaryTreeNode* pNodeA1 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNodeA2 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNodeA3 = CreateBinaryTreeNode(9);
@@ -261,8 +250,7 @@ void Test4()
 //             2        
 //              \
 //               5
-void Test5()
-{
+void Test5() {
     BinaryTreeNode* pNodeA1 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNodeA2 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNodeA3 = CreateBinaryTreeNode(9);
@@ -297,8 +285,7 @@ void Test5()
 //             2        
 //              \
 //               5
-void Test6()
-{
+void Test6() {
     BinaryTreeNode* pNodeA1 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNodeA2 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNodeA3 = CreateBinaryTreeNode(9);
@@ -325,8 +312,7 @@ void Test6()
 }
 
 // 树A为空树
-void Test7()
-{
+void Test7() {
     BinaryTreeNode* pNodeB1 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNodeB2 = CreateBinaryTreeNode(9);
     BinaryTreeNode* pNodeB3 = CreateBinaryTreeNode(3);
@@ -341,8 +327,7 @@ void Test7()
 }
 
 // 树B为空树
-void Test8()
-{
+void Test8() {
     BinaryTreeNode* pNodeA1 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNodeA2 = CreateBinaryTreeNode(9);
     BinaryTreeNode* pNodeA3 = CreateBinaryTreeNode(3);
@@ -357,13 +342,11 @@ void Test8()
 }
 
 // 树A和树B都为空
-void Test9()
-{
+void Test9() {
     Test("Test9", nullptr, nullptr, false);
 }
 
-int main(int argc, char* argv[])
-{
+int main() {
     Test1();
     Test2();
     Test3();
