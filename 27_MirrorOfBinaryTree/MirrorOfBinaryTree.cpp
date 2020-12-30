@@ -16,11 +16,12 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 题目：请完成一个函数，输入一个二叉树，该函数输出它的镜像。
 
 #include <cstdio>
-#include "..\Utilities\BinaryTree.h"
+#include "../util/binarytree.h"
 #include <stack>
 
-void MirrorRecursively(BinaryTreeNode *pNode)
-{
+
+// 这个问题画个图很容易想到，就是遍历所有非叶子节点，交换其左右子节点
+void MirrorRecursively(BinaryTreeNode *pNode) {
     if((pNode == nullptr) || (pNode->m_pLeft == nullptr && pNode->m_pRight))
         return;
 
@@ -35,16 +36,15 @@ void MirrorRecursively(BinaryTreeNode *pNode)
         MirrorRecursively(pNode->m_pRight); 
 }
 
-void MirrorIteratively(BinaryTreeNode* pRoot)
-{
+// 非递归实现
+void MirrorIteratively(BinaryTreeNode* pRoot) {
     if(pRoot == nullptr)
         return;
 
     std::stack<BinaryTreeNode*> stackTreeNode;
     stackTreeNode.push(pRoot);
 
-    while(stackTreeNode.size() > 0)
-    {
+    while(stackTreeNode.size() > 0) {
         BinaryTreeNode *pNode = stackTreeNode.top();
         stackTreeNode.pop();
 
@@ -65,8 +65,7 @@ void MirrorIteratively(BinaryTreeNode* pRoot)
 //            8
 //        6      10
 //       5 7    9  11
-void Test1()
-{
+void Test1() {
     printf("=====Test1 starts:=====\n");
     BinaryTreeNode* pNode8 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNode6 = CreateBinaryTreeNode(6);
@@ -99,8 +98,7 @@ void Test1()
 //        6 
 //      5
 //    4
-void Test2()
-{
+void Test2() {
     printf("=====Test2 starts:=====\n");
     BinaryTreeNode* pNode8 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNode7 = CreateBinaryTreeNode(7);
@@ -132,8 +130,7 @@ void Test2()
 //              6 
 //               5
 //                4
-void Test3()
-{
+void Test3() {
     printf("=====Test3 starts:=====\n");
     BinaryTreeNode* pNode8 = CreateBinaryTreeNode(8);
     BinaryTreeNode* pNode7 = CreateBinaryTreeNode(7);
@@ -160,8 +157,7 @@ void Test3()
 }
 
 // 测试空二叉树：根结点为空指针
-void Test4()
-{
+void Test4() {
     printf("=====Test4 starts:=====\n");
     BinaryTreeNode* pNode = nullptr;
 
@@ -177,8 +173,7 @@ void Test4()
 }
 
 // 测试只有一个结点的二叉树
-void Test5()
-{
+void Test5() {
     printf("=====Test5 starts:=====\n");
     BinaryTreeNode* pNode8 = CreateBinaryTreeNode(8);
 
@@ -193,8 +188,7 @@ void Test5()
     PrintTree(pNode8);
 }
 
-int main(int argc, char* argv[])
-{
+int main() {
     Test1();
     Test2();
     Test3();
