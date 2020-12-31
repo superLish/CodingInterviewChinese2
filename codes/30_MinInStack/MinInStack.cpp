@@ -19,8 +19,7 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 #include <cstdio>
 #include "StackWithMin.h"
 
-void Test(const char* testName, const StackWithMin<int>& stack, int expected)
-{
+void Test(const char* testName, const StackWithMin<int>& stack, int expected) {
     if(testName != nullptr)
         printf("%s begins: ", testName);
 
@@ -30,8 +29,7 @@ void Test(const char* testName, const StackWithMin<int>& stack, int expected)
         printf("Failed.\n");
 }
 
-int main(int argc, char* argv[])
-{
+int main() {
     StackWithMin<int> stack;
 
     stack.push(3);

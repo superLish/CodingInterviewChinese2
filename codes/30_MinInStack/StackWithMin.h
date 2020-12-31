@@ -12,8 +12,9 @@
 #include <stack>
 #include <assert.h>
 
-template <typename T> class StackWithMin
-{
+
+// 因为要求min的时间复杂度是O(1)，所以，就需要在已有一个数据栈的基础上，再添加一个辅助栈保存最小元素，这样才能满足min的时间复杂度为O(1)
+template <typename T> class StackWithMin {
 public:
     StackWithMin() {}
     virtual ~StackWithMin() {}
@@ -34,9 +35,8 @@ private:
     std::stack<T>   m_min;      // 辅助栈，存放栈的最小元素
 };
 
-template <typename T> void StackWithMin<T>::push(const T& value)
-{
-    // 把新元素添加到辅助栈
+template <typename T> void StackWithMin<T>::push(const T& value) {
+    // 把新元素添加到数据栈
     m_data.push(value);
 
     // 当新元素比之前的最小元素小时，把新元素插入辅助栈里；
@@ -47,8 +47,7 @@ template <typename T> void StackWithMin<T>::push(const T& value)
         m_min.push(m_min.top());
 }
 
-template <typename T> void StackWithMin<T>::pop()
-{
+template <typename T> void StackWithMin<T>::pop() {
     assert(m_data.size() > 0 && m_min.size() > 0);
 
     m_data.pop();
@@ -56,29 +55,24 @@ template <typename T> void StackWithMin<T>::pop()
 }
 
 
-template <typename T> const T& StackWithMin<T>::min() const
-{
+template <typename T> const T& StackWithMin<T>::min() const {
     assert(m_data.size() > 0 && m_min.size() > 0);
 
     return m_min.top();
 }
 
-template <typename T> T& StackWithMin<T>::top()
-{
+template <typename T> T& StackWithMin<T>::top() {
     return m_data.top();
 }
 
-template <typename T> const T& StackWithMin<T>::top() const
-{
+template <typename T> const T& StackWithMin<T>::top() const {
     return m_data.top();
 }
 
-template <typename T> bool StackWithMin<T>::empty() const
-{
+template <typename T> bool StackWithMin<T>::empty() const {
     return m_data.empty();
 }
 
-template <typename T> size_t StackWithMin<T>::size() const
-{
+template <typename T> size_t StackWithMin<T>::size() const {
     return m_data.size();
 }
