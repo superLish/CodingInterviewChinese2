@@ -20,6 +20,42 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 
 #include <cstdio>
 #include <stack>
+#include <cassert>
+
+//-------------实现一-----------------------
+bool stack_match(const int* pPush, const int* pPop, const int n) {
+    assert(pPush != nullptr && pPop != nullptr && n > 0);
+    // bool is_match = true;
+    int i_pop = 0;
+    int i_push = 0;
+    std::stack<int> m_stack;
+
+    while (i_pop < n && i_push < n) {
+        
+        while (i_push < n && pPop[i_pop] != pPush[i_push]) {
+            m_stack.push(pPush[i_push]);
+            ++i_push;
+            if (n == i_push) 
+                return false;
+        }
+        ++i_pop;        // 过滤掉匹配的元素    
+        ++i_push;
+
+        while (!m_stack.empty() && m_stack.top() == pPop[i_pop]) {
+            m_stack.pop();
+            ++i_pop;
+        }
+    }
+
+    if (i_push == n && i_pop == n)
+        return true;
+    else
+        return false;        
+}
+
+
+
+
 
 bool IsPopOrder(const int* pPush, const int* pPop, int nLength)
 {
