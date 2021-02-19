@@ -22,23 +22,26 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 #include <stack>
 #include <cassert>
 
+// 想这个问题的时候，一开始很难有思路，其实就是根据弹出序列，检查按压入顺序，是否存在合法的压入弹出操作相匹配。
+
 //-------------实现一-----------------------
 bool stack_match(const int* pPush, const int* pPop, const int n) {
     assert(pPush != nullptr && pPop != nullptr && n > 0);
     // bool is_match = true;
     int i_pop = 0;
     int i_push = 0;
-    std::stack<int> m_stack;
+    std::stack<int> m_stack;        // 辅助栈
 
     while (i_pop < n && i_push < n) {
         
-        while (i_push < n && pPop[i_pop] != pPush[i_push]) {
+        while (i_push < n && pPop[i_pop] != pPush[i_push]) {  // 先按弹出序列， 比对入栈序列，如果不匹配就压栈
             m_stack.push(pPush[i_push]);
             ++i_push;
             if (n == i_push) 
                 return false;
         }
-        ++i_pop;        // 过滤掉匹配的元素    
+        
+        ++i_pop;        // 过滤掉匹配的元素， 找到匹配的元素后，接着++i_pop找弹出序列的下一个元素是否匹配   
         ++i_push;
 
         while (!m_stack.empty() && m_stack.top() == pPop[i_pop]) {
@@ -55,25 +58,19 @@ bool stack_match(const int* pPush, const int* pPop, const int n) {
 
 
 
-
-
-bool IsPopOrder(const int* pPush, const int* pPop, int nLength)
-{
+bool IsPopOrder(const int* pPush, const int* pPop, int nLength) {
     bool bPossible = false;
 
-    if(pPush != nullptr && pPop != nullptr && nLength > 0)
-    {
+    if(pPush != nullptr && pPop != nullptr && nLength > 0) {
         const int* pNextPush = pPush;
         const int* pNextPop = pPop;
 
         std::stack<int> stackData;
 
-        while(pNextPop - pPop < nLength)
-        {
+        while(pNextPop - pPop < nLength) {
             // 当辅助栈的栈顶元素不是要弹出的元素
             // 先压入一些数字入栈
-            while(stackData.empty() || stackData.top() != *pNextPop)
-            {
+            while(stackData.empty() || stackData.top() != *pNextPop) {
                 // 如果所有数字都压入辅助栈了，退出循环
                 if(pNextPush - pPush == nLength)
                     break;
@@ -98,8 +95,7 @@ bool IsPopOrder(const int* pPush, const int* pPop, int nLength)
 }
 
 // ====================测试代码====================
-void Test(const char* testName, const int* pPush, const int* pPop, int nLength, bool expected)
-{
+void Test(const char* testName, const int* pPush, const int* pPop, int nLength, bool expected) {
     if(testName != nullptr)
         printf("%s begins: ", testName);
 
@@ -109,8 +105,7 @@ void Test(const char* testName, const int* pPush, const int* pPop, int nLength, 
         printf("failed.\n");
 }
 
-void Test1()
-{
+void Test1() {
     const int nLength = 5;
     int push[nLength] = {1, 2, 3, 4, 5};
     int pop[nLength] = {4, 5, 3, 2, 1};
@@ -118,8 +113,7 @@ void Test1()
     Test("Test1", push, pop, nLength, true);
 }
 
-void Test2()
-{
+void Test2() {
     const int nLength = 5;
     int push[nLength] = {1, 2, 3, 4, 5};
     int pop[nLength] = {3, 5, 4, 2, 1};
@@ -127,8 +121,7 @@ void Test2()
     Test("Test2", push, pop, nLength, true);
 }
 
-void Test3()
-{
+void Test3() {
     const int nLength = 5;
     int push[nLength] = {1, 2, 3, 4, 5};
     int pop[nLength] = {4, 3, 5, 1, 2};
@@ -136,8 +129,7 @@ void Test3()
     Test("Test3", push, pop, nLength, false);
 }
 
-void Test4()
-{
+void Test4() {
     const int nLength = 5;
     int push[nLength] = {1, 2, 3, 4, 5};
     int pop[nLength] = {3, 5, 4, 1, 2};
@@ -146,8 +138,7 @@ void Test4()
 }
 
 // push和pop序列只有一个数字
-void Test5()
-{
+void Test5() {
     const int nLength = 1;
     int push[nLength] = {1};
     int pop[nLength] = {2};
@@ -155,8 +146,7 @@ void Test5()
     Test("Test5", push, pop, nLength, false);
 }
 
-void Test6()
-{
+void Test6() {
     const int nLength = 1;
     int push[nLength] = {1};
     int pop[nLength] = {1};
@@ -164,13 +154,11 @@ void Test6()
     Test("Test6", push, pop, nLength, true);
 }
 
-void Test7()
-{
+void Test7() {
     Test("Test7", nullptr, nullptr, 0, false);
 }
  
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     Test1();
     Test2();
     Test3();

@@ -34,7 +34,8 @@
 [面试题28：对称的二叉树](./codes/28_SymmetricalBinaryTree.cpp)          
 [面试题29：顺时针打印矩阵](./codes/29_PrintMatrix/PrintMatrix.cpp)          
 [面试题30：包含min函数的栈](./codes/30_MinInStack/StackWithMin.h)
-
+[面试题31：栈的压入、弹出序列](./code/31_StackPushPopOrder/StackPushPopOrder.cpp)           
+[面试题32：打印二叉树(不分行从上往下/分行从上到下打印二叉树/之字形打印二叉树)](./code/32_PrintTree)
 
 ---
 ### 总结
