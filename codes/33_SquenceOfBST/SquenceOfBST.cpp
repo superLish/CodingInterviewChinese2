@@ -18,9 +18,9 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 
 #include <cstdio>
 
+// 思路： 重点是理解二叉搜索树后序遍历的性质，一个正确的后序遍历结果：最后一个是根节点，凡是比根节点小的，都是其左子树节点，凡是比根节点大的，都是其右子树节点，再利用递归......
 // BST：Binary Search Tree，二叉搜索树
-bool VerifySquenceOfBST(int sequence[], int length)
-{
+bool VerifySquenceOfBST(int sequence[], int length) {
     if(sequence == nullptr || length <= 0)
         return false;
 
@@ -28,16 +28,14 @@ bool VerifySquenceOfBST(int sequence[], int length)
 
     // 在二叉搜索树中左子树的结点小于根结点
     int i = 0;
-    for(; i < length - 1; ++ i)
-    {
+    for(; i < length - 1; ++ i) {
         if(sequence[i] > root)
             break;
     }
 
     // 在二叉搜索树中右子树的结点大于根结点
     int j = i;
-    for(; j < length - 1; ++ j)
-    {
+    for(; j < length - 1; ++ j) {
         if(sequence[j] < root)
             return false;
     }
@@ -56,8 +54,7 @@ bool VerifySquenceOfBST(int sequence[], int length)
 }
 
 // ====================测试代码====================
-void Test(const char* testName, int sequence[], int length, bool expected)
-{
+void Test(const char* testName, int sequence[], int length, bool expected) {
     if(testName != nullptr)
         printf("%s begins: ", testName);
 
@@ -72,8 +69,7 @@ void Test(const char* testName, int sequence[], int length, bool expected)
 //        6        14
 //       /\        /\
 //      4  8     12  16
-void Test1()
-{
+void Test1() {
     int data[] = {4, 8, 6, 12, 16, 14, 10};
     Test("Test1", data, sizeof(data)/sizeof(int), true);
 }
@@ -83,8 +79,7 @@ void Test1()
 //         4   7
 //            /
 //           6
-void Test2()
-{
+void Test2() {
     int data[] = {4, 6, 7, 5};
     Test("Test2", data, sizeof(data)/sizeof(int), true);
 }
@@ -98,8 +93,7 @@ void Test2()
 //         2
 //        /
 //       1
-void Test3()
-{
+void Test3() {
     int data[] = {1, 2, 3, 4, 5};
     Test("Test3", data, sizeof(data)/sizeof(int), true);
 }
@@ -113,38 +107,32 @@ void Test3()
 //       4
 //        \
 //         5
-void Test4()
-{
+void Test4() {
     int data[] = {5, 4, 3, 2, 1};
     Test("Test4", data, sizeof(data)/sizeof(int), true);
 }
 
 // 树中只有1个结点
-void Test5()
-{
+void Test5() {
     int data[] = {5};
     Test("Test5", data, sizeof(data)/sizeof(int), true);
 }
 
-void Test6()
-{
+void Test6() {
     int data[] = {7, 4, 6, 5};
     Test("Test6", data, sizeof(data)/sizeof(int), false);
 }
 
-void Test7()
-{
+void Test7() {
     int data[] = {4, 6, 12, 8, 16, 14, 10};
     Test("Test7", data, sizeof(data)/sizeof(int), false);
 }
 
-void Test8()
-{
+void Test8() {
     Test("Test8", nullptr, 0, false);
 }
 
-int main(int argc, char* argv[])
-{
+int main() {
     Test1();
     Test2();
     Test3();
