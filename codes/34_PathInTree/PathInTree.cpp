@@ -17,13 +17,18 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 // 有路径。从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。
 
 #include <cstdio>
-#include "..\Utilities\BinaryTree.h"
+#include "../util/binarytree.h"
 #include <vector>
+#include<iostream>
+using namespace std;
+
+
+
+#ifndef MY
 
 void FindPath(BinaryTreeNode* pRoot, int expectedSum, std::vector<int>& path, int& currentSum);
 
-void FindPath(BinaryTreeNode* pRoot, int expectedSum)
-{
+void FindPath(BinaryTreeNode* pRoot, int expectedSum) {
     if(pRoot == nullptr)
         return;
 
@@ -32,22 +37,13 @@ void FindPath(BinaryTreeNode* pRoot, int expectedSum)
     FindPath(pRoot, expectedSum, path, currentSum);
 }
 
-void FindPath
-(
-    BinaryTreeNode*   pRoot,        
-    int               expectedSum,  
-    std::vector<int>& path,         
-    int&              currentSum
-)
-{
+void FindPath(BinaryTreeNode* pRoot, int expectedSum,  std::vector<int>& path, int& currentSum) {
     currentSum += pRoot->m_nValue;
     path.push_back(pRoot->m_nValue);
 
-    // 如果是叶结点，并且路径上结点的和等于输入的值
-    // 打印出这条路径
+    // 如果是叶结点，并且路径上结点的和等于输入的值 打印出这条路径
     bool isLeaf = pRoot->m_pLeft == nullptr && pRoot->m_pRight == nullptr;
-    if(currentSum == expectedSum && isLeaf)
-    {
+    if(currentSum == expectedSum && isLeaf) {
         printf("A path is found: ");
         std::vector<int>::iterator iter = path.begin();
         for(; iter != path.end(); ++ iter)
@@ -62,15 +58,15 @@ void FindPath
     if(pRoot->m_pRight != nullptr)
         FindPath(pRoot->m_pRight, expectedSum, path, currentSum);
 
-    // 在返回到父结点之前，在路径上删除当前结点，
-    // 并在currentSum中减去当前结点的值
+    // 在返回到父结点之前，在路径上删除当前结点， 并在currentSum中减去当前结点的值
     currentSum -= pRoot->m_nValue;
     path.pop_back();
 } 
 
+#endif
+
 // ====================测试代码====================
-void Test(char* testName, BinaryTreeNode* pRoot, int expectedSum)
-{
+void Test(char* testName, BinaryTreeNode* pRoot, int expectedSum) {
     if(testName != nullptr)
         printf("%s begins:\n", testName);
 
@@ -85,8 +81,7 @@ void Test(char* testName, BinaryTreeNode* pRoot, int expectedSum)
 //       /\        
 //      4  7     
 // 有两条路径上的结点和为22
-void Test1()
-{
+void Test1() {
     BinaryTreeNode* pNode10 = CreateBinaryTreeNode(10);
     BinaryTreeNode* pNode5 = CreateBinaryTreeNode(5);
     BinaryTreeNode* pNode12 = CreateBinaryTreeNode(12);
@@ -108,8 +103,7 @@ void Test1()
 //       /\        
 //      4  7     
 // 没有路径上的结点和为15
-void Test2()
-{
+void Test2() {
     BinaryTreeNode* pNode10 = CreateBinaryTreeNode(10);
     BinaryTreeNode* pNode5 = CreateBinaryTreeNode(5);
     BinaryTreeNode* pNode12 = CreateBinaryTreeNode(12);
@@ -135,8 +129,7 @@ void Test2()
 //        /
 //       1
 // 有一条路径上面的结点和为15
-void Test3()
-{
+void Test3() {
     BinaryTreeNode* pNode5 = CreateBinaryTreeNode(5);
     BinaryTreeNode* pNode4 = CreateBinaryTreeNode(4);
     BinaryTreeNode* pNode3 = CreateBinaryTreeNode(3);
@@ -164,8 +157,7 @@ void Test3()
 //        \
 //         5
 // 没有路径上面的结点和为16
-void Test4()
-{
+void Test4() {
     BinaryTreeNode* pNode1 = CreateBinaryTreeNode(1);
     BinaryTreeNode* pNode2 = CreateBinaryTreeNode(2);
     BinaryTreeNode* pNode3 = CreateBinaryTreeNode(3);
@@ -184,8 +176,7 @@ void Test4()
 }
 
 // 树中只有1个结点
-void Test5()
-{
+void Test5() {
     BinaryTreeNode* pNode1 = CreateBinaryTreeNode(1);
 
     printf("One path should be found in Test5.\n");
@@ -195,14 +186,12 @@ void Test5()
 }
 
 // 树中没有结点
-void Test6()
-{
+void Test6() {
     printf("No paths should be found in Test6.\n");
     Test("Test6", nullptr, 0);
 }
 
-int main(int argc, char* argv[])
-{
+int main() {
     Test1();
     Test2();
     Test3();
