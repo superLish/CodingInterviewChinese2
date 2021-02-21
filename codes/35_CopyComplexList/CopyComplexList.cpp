@@ -19,7 +19,79 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 
 #include <cstdio>
 #include "ComplexList.h"
+#include<vector>
+#include<iostream>
+using namespace std;
 
+
+#define MY
+
+
+// 第一种思路，先复制主链，再赋值sibling。  解决这个问题的关键在配对这个过程，后面一种实现思路很巧妙的利用链表本身解决了配对问题，算法效率最忧
+#ifdef MY
+
+ComplexListNode* NodeClone(ComplexListNode* pNode) {
+    ComplexListNode* copy = CreateNode(pNode->m_nValue);
+    copy->m_pSibling = pNode;
+    return copy;
+}
+
+
+
+ComplexListNode* Clone(ComplexListNode* pHead) {
+    if (pHead == nullptr)
+        return nullptr;
+
+    // 1. Clone 主链
+    ComplexListNode* pNewHead = NodeClone(pHead);
+    ComplexListNode* pPrev = pNewHead;
+    ComplexListNode* pCur1 = pHead->m_pNext;
+    while (pCur1 != nullptr) {
+        ComplexListNode* copy = NodeClone(pCur1);
+        pPrev->m_pNext = copy;
+        pPrev = copy;
+        pCur1 = pCur1->m_pNext;
+    }    
+
+    // 2. 新旧节点地址结对, 这里也可以用哈希表
+    std::vector<std::pair<ComplexListNode*, ComplexListNode*>> m_vector;
+    ComplexListNode* pCur2 = pNewHead;
+    while(pCur2 != nullptr) {
+        auto pair = std::make_pair(pCur2->m_pSibling, pCur2);
+        m_vector.push_back(pair);
+        pCur2 = pCur2->m_pNext;
+    }
+
+    // for (auto p : m_vector) {
+    //     cout << "<" << p.first->m_nValue << ", " << p.second->m_nValue << ">  "; 
+    // }
+
+    // 3. 赋值m_pSibling
+    ComplexListNode* pNewCur = pNewHead;
+    ComplexListNode* pOldCur = pHead;
+    while (pOldCur != nullptr) {
+        ComplexListNode* pSib = pOldCur->m_pSibling;
+
+        ComplexListNode* pNewSib = nullptr;
+        for (auto p : m_vector) {
+            if (p.first == pSib) {
+                pNewSib = p.second;
+                break;
+            }
+        }
+        pNewCur->m_pSibling = pNewSib;
+
+        pOldCur = pOldCur->m_pNext;
+        pNewCur = pNewCur->m_pNext;
+    }
+
+    return pNewHead;
+}
+
+#endif
+
+
+#ifndef MY
 void CloneNodes(ComplexListNode* pHead);
 void ConnectSiblingNodes(ComplexListNode* pHead);
 ComplexListNode* ReconnectNodes(ComplexListNode* pHead);
@@ -86,10 +158,11 @@ ComplexListNode* ReconnectNodes(ComplexListNode* pHead)
  
     return pClonedHead;
 }
+#endif
 
 // ====================测试代码====================
-void Test(const char* testName, ComplexListNode* pHead)
-{
+void Test(const char* testName, ComplexListNode* pHead) {
+    printf("\n");
     if(testName != nullptr)
         printf("%s begins:\n", testName);
 
@@ -108,8 +181,7 @@ void Test(const char* testName, ComplexListNode* pHead)
 //  |       |      /|\             /|\
 //  --------+--------               |
 //          -------------------------
-void Test1()
-{
+void Test1() {
     ComplexListNode* pNode1 = CreateNode(1);
     ComplexListNode* pNode2 = CreateNode(2);
     ComplexListNode* pNode3 = CreateNode(3);
@@ -131,8 +203,7 @@ void Test1()
 //         |       | /|\           /|\
 //         |       | --             |
 //         |------------------------|
-void Test2()
-{
+void Test2() {
     ComplexListNode* pNode1 = CreateNode(1);
     ComplexListNode* pNode2 = CreateNode(2);
     ComplexListNode* pNode3 = CreateNode(3);
@@ -154,8 +225,7 @@ void Test2()
 //          |              /|\
 //          |               |
 //          |---------------|
-void Test3()
-{
+void Test3() {
     ComplexListNode* pNode1 = CreateNode(1);
     ComplexListNode* pNode2 = CreateNode(2);
     ComplexListNode* pNode3 = CreateNode(3);
@@ -171,8 +241,7 @@ void Test3()
 }
 
 // 只有一个结点
-void Test4()
-{
+void Test4() {
     ComplexListNode* pNode1 = CreateNode(1);
     BuildNodes(pNode1, nullptr, pNode1);
 
@@ -180,13 +249,11 @@ void Test4()
 }
 
 // 鲁棒性测试
-void Test5()
-{
+void Test5() {
     Test("Test5", nullptr);
 }
 
-int main(int argc, char* argv[])
-{
+int main() {
     Test1();
     Test2();
     Test3();

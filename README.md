@@ -1,7 +1,7 @@
 ### CodingInterviewChinese2
 《剑指Offer》第二版源代码, Fork from [zhedahht/CodingInterviewChinese2](https://github.com/zhedahht/CodingInterviewChinese2)。
 
-代码运行环境Linux，在学习与思考其实现时，添加了一些自己的理解与其他实现的代码。所有题目索引如下
+代码运行环境Linux，在学习与思考其实现时，添加了一些自己的理解与其他实现的代码。所有题目代码索引如下
 
 [面试题1：赋值运算符函数](./codes/01_AssignmentOperator/AssignmentOperator.cpp)           
 [面试题2：实现单例模式](./codes/02_Singleton/singleton.cpp)                  
@@ -38,7 +38,7 @@
 [面试题32：打印二叉树(不分行从上往下/分行从上到下打印二叉树/之字形打印二叉树)](./codes/32_PrintTree)         
 [面试题33：二叉搜索树的后序遍历序列](./codes/33_SquenceOfBST/SquenceOfBST.cpp)                    
 [面试题34：二叉树中和为某一值的路径](./codes/34_PathInTree/PathInTree.cpp)           
-
+[面试题35：复杂链表的复制](./codes/35_CopyComplexList)
 
 
 ---
@@ -51,3 +51,5 @@
 3. 关于效率的问题？怎么提高代码执行效率，或者说性能，一个很重要的思路就是分析当前代码有没有重复计算的问题，如果有，想办法**减少重复计算**，效率一定会提升，但代价也许是空间的开销增大，需要针对具体问题具体进行权衡。其中提升性能的一个思路就是**空间换时间**。
 
 4. **防御性编程**，增加程序代码的鲁棒性。这是很好的一种编程习惯。要十分注意一些边界条件，这些边界条件也是测试的重点项。
+
+5. 如果你解决一个问题的时间复杂度是`O(N^2)`，你可能需要想一下，是否有优化的办法能降下来，将为`O(Nlog(N))`，再降为`O(N)`，就非常好了，如果能直接降为`O(1)`，往往是利用数学的办法，直接去解。
