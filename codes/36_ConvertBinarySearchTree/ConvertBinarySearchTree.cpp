@@ -20,7 +20,16 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 #include "../util/binarytree.h"
 
 
+/*
 
+struct BinaryTreeNode {
+    int                    m_nValue; 
+    BinaryTreeNode*        m_pLeft;     // 改为双向链表中的前驱节点指针
+    BinaryTreeNode*        m_pRight;    // 改为双向链表中的后驱节点指针
+};
+*/
+
+// 对每个节点，前驱节点改为其左子树的最大值的节点
 BinaryTreeNode* MyConvert(BinaryTreeNode* pRootTree) {
     
 }

@@ -19,12 +19,45 @@ https://github.com/zhedahht/CodingInterviewChinese2/blob/master/LICENSE.txt)
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
+#include <iostream>
+using namespace std;
+
+
+// 第一种思路，遍历1到n，对每个值计算其1的个数，加起来。
+int number_of_1(uint n) {
+    int count = 0;
+    if (n % 10 == 1) {      // 个位是否为1
+        ++count;    
+    }
+
+    int i = 10;
+    while (true) {
+        int v = n / i;
+        if (v == 0) {
+            break;
+        } else if (v % 10 == 1) {
+            ++count;
+        }
+        i = i*10;
+    }
+
+    return count;
+}
+
+int number_of_1_to_n(uint n) {
+    int count = 0;
+    for (int i = 1; i <= n; ++i) {
+        count = count + number_of_1(i);
+    }
+
+    return count;
+}
+
 
 // ====================方法一====================
 int NumberOf1(unsigned int n);
 
-int NumberOf1Between1AndN_Solution1(unsigned int n)
-{
+int NumberOf1Between1AndN_Solution1(unsigned int n) {
     int number = 0;
 
     for(unsigned int i = 1; i <= n; ++ i)
@@ -33,11 +66,9 @@ int NumberOf1Between1AndN_Solution1(unsigned int n)
     return number;
 }
 
-int NumberOf1(unsigned int n)
-{
+int NumberOf1(unsigned int n) {
     int number = 0;
-    while(n)
-    {
+    while(n) {
         if(n % 10 == 1)
             number ++;
 
@@ -51,8 +82,7 @@ int NumberOf1(unsigned int n)
 int NumberOf1(const char* strN);
 int PowerBase10(unsigned int n);
 
-int NumberOf1Between1AndN_Solution2(int n)
-{
+int NumberOf1Between1AndN_Solution2(int n) {
     if(n <= 0)
         return 0;
 
@@ -62,8 +92,7 @@ int NumberOf1Between1AndN_Solution2(int n)
     return NumberOf1(strN);
 }
 
-int NumberOf1(const char* strN)
-{
+int NumberOf1(const char* strN) {
     if(!strN || *strN < '0' || *strN > '9' || *strN == '\0')
         return 0;
 
@@ -92,8 +121,7 @@ int NumberOf1(const char* strN)
     return numFirstDigit + numOtherDigits + numRecursive;
 }
 
-int PowerBase10(unsigned int n)
-{
+int PowerBase10(unsigned int n) {
     int result = 1;
     for(unsigned int i = 0; i < n; ++ i)
         result *= 10;
@@ -102,8 +130,7 @@ int PowerBase10(unsigned int n)
 }
 
 // ====================测试代码====================
-void Test(const char* testName, int n, int expected)
-{
+void Test(const char* testName, int n, int expected) {
     if(testName != nullptr)
         printf("%s begins: \n", testName);
     
@@ -117,11 +144,15 @@ void Test(const char* testName, int n, int expected)
     else
         printf("Solution2 failed.\n"); 
 
+    if (number_of_1_to_n(n) == expected)
+        printf("Solution3 passed.\n");
+    else
+        printf("Solution3 failed.\n"); 
+
     printf("\n");
 }
 
-void Test()
-{
+void Test() {
     Test("Test1", 1, 1);
     Test("Test2", 5, 1);
     Test("Test3", 10, 2);
@@ -132,8 +163,14 @@ void Test()
     Test("Test8", 0, 0);
 }
 
-int main(int argc, char* argv[])
-{
+void test_number_of_1() {
+    cout << "101 number of one: " << number_of_1(101) << endl;
+    cout << "10000 number of one: " << number_of_1(10000) << endl;
+    cout << "11011 number of one: " << number_of_1(11011) << endl;
+}
+
+int main() {
+    test_number_of_1();
     Test();
 
     return 0;
